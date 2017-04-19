@@ -23,9 +23,8 @@ script:
 after_success:
   - |
     if [[ ! -z "$TRAVIS_TAG" ]]; then
-      docker build -t "$REPO":latest .
-      docker tag  ga-prom "$REPO":"$TRAVIS_TAG"
-      docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" quay.io
+      docker build --tag "$REPO":latest --tag "$REPO":"$TRAVIS_TAG" .
+      docker login --username "$DOCKER_USER" --password "$DOCKER_PASS" quay.io
       docker push "$REPO":"$TRAVIS_TAG"
     fi
 
